@@ -2,7 +2,6 @@ import { DotFilter, GlitchFilter } from 'pixi-filters';
 import { Container, Application, Sprite } from 'pixi.js';
 
 class GlitchAnimation {
-  elmRect
   constructor({...props}) {
     this.elm = document.querySelector('[data-pixi-logo]')
     this.elmRect = this.elm.getBoundingClientRect()
