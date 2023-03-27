@@ -3,9 +3,9 @@ import { Container, Application, Sprite } from 'pixi.js';
 
 class GlitchAnimation {
   constructor({...props}) {
-    this.elm = document.querySelector('[data-pixi-logo]')
+    this.elm = document.querySelector(props.wrapper)
     this.elmRect = this.elm.getBoundingClientRect()
-    this.stage = document.getElementById('js-pixi-stage')
+    this.stage = document.getElementById(props.stage)
     this.padding = 50
 
     this.app = new Application({
@@ -28,14 +28,14 @@ class GlitchAnimation {
   setFilter() {
     this.GlitchFilter = new GlitchFilter()
     this.GlitchFilter.slices = 20
-    this.GlitchFilter.offset = 10
+    this.GlitchFilter.offset = 3
     this.GlitchFilter.red = [1, 1]
     this.GlitchFilter.blue = [-1, -1]
     this.GlitchFilter.green = [0, 0]
     this.GlitchFilter.enabled = true
 
     this.DotFIlter = new DotFilter()
-    this.DotFIlter.scale = 40
+    this.DotFIlter.scale = 50
     this.DotFIlter.grayscale = false
     this.DotFIlter.enabled = true
 
@@ -47,12 +47,11 @@ class GlitchAnimation {
       const r1 = Math.random()
       const r2 = Math.random() * 9
 
-      if (this.GlitchFilter.enabled) {
-        this.GlitchFilter.red = [5 - r2, -5]
-        this.GlitchFilter.blue = [10 - r2, 4]
-      }
+      this.GlitchFilter.red = [5 - r2, -3]
+      this.GlitchFilter.blue = [2 - r2, 1]
+      this.GlitchFilter.green = [0 - r2, 2]
 
-      if (counter % 4 === 0 && r1 > 0.5) {
+      if (counter % 4 === 0 && r1 > 0.6 || counter % 50 === 0) {
         this.GlitchFilter.refresh()
       }
     })
@@ -73,9 +72,11 @@ class GlitchAnimation {
 }
 
 const logoGLitch = new GlitchAnimation({
-  img: 'logo-unite.png'
+  img: 'logo-unite.png',
+  wrapper: '[data-pixi-logo]',
+  stage: 'js-pixi-stage'
 });
 
 window.addEventListener('resize', () => {
-  logoGLitch.setSize
+  logoGLitch.setSize()
 })
